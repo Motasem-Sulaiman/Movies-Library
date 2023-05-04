@@ -2,6 +2,8 @@
 require("dotenv").config();
 const express = require("express");
 const movieKey = process.env.API_KEY;
+const pg=require("pg");
+const client=new pg.Client(process.env.DATABASE_URL);
 const axios = require("axios");
 const moviesData = require("./Movie Data/data.json");
 const server = express();
@@ -9,6 +11,7 @@ let newArr = [];
 const port = 3001;
 const cors = require("cors");
 server.use(cors());
+server.use(express.json());
 
 function MoviesApi(id, title, release_date, poster_path, overview) {
   this.id = id;
@@ -28,10 +31,46 @@ function Movies(title, poster_path, overview, id, vote_average) {
   this.vote_average = vote_average;
 }
 
+
+
 server.get("/trending", getMovies);
 server.get("/search", searchMovies);
 server.get("/now_playing", nowPlaying);
 server.get("/top_rated", topRated);
+server.get("/getMovies",getMoviesDb)
+server.post("/addMovie",addMovieDb)
+
+function addMovieDb(req, res) {
+  const movie = req.body;
+  const sql = `INSERT INTO addmovie (title, release_date, poster_path) 
+     values ('${movie.title}', '${movie.release_date}', '${movie.poster_path}')RETURNING*;`;
+
+  client.query(sql).then((data) => {
+    res.send(data.rows);
+  });
+}
+
+
+function getMoviesDb(req,res){
+
+const sql='select * from addmovie;';
+client.query(sql).then((data)=>{
+
+
+res.send(data.rows)
+
+
+
+
+})
+
+
+
+}
+
+
+
+
 
 function topRated(req, res) {
   const url = `https://api.themoviedb.org/3/movie/top_rated?api_key=${movieKey}`;
@@ -105,6 +144,14 @@ function serverErorr(req, res) {
 server.use(notFound);
 server.use(serverErorr);
 
-server.listen(port, () => {
-  console.log(`server port is ${port}`);
-});
+
+client.connect().then(()=>{
+
+
+  server.listen(port, () => {
+    console.log(`server port is ${port}`);
+  });
+
+
+})
+
