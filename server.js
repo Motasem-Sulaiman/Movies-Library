@@ -42,8 +42,8 @@ server.post("/addMovie",addMovieDb)
 
 function addMovieDb(req, res) {
   const movie = req.body;
-  const sql = `INSERT INTO addmovie (title, release_date, poster_path) 
-     values ('${movie.title}', '${movie.release_date}', '${movie.poster_path}')RETURNING*;`;
+  const sql = `INSERT INTO addmovie (title, release_date, poster_path,comments) 
+     values ('${movie.title}', '${movie.release_date}', '${movie.poster_path}','${movie.comments}')RETURNING*;`;
 
   client.query(sql).then((data) => {
     res.send(data.rows);
