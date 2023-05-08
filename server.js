@@ -37,8 +37,62 @@ server.get("/trending", getMovies);
 server.get("/search", searchMovies);
 server.get("/now_playing", nowPlaying);
 server.get("/top_rated", topRated);
-server.get("/getMovies",getMoviesDb)
-server.post("/addMovie",addMovieDb)
+server.get("/getMovies",getMoviesDb);
+server.post("/addMovie",addMovieDb);
+server.delete("/DELETE/:id",deleteMovie)
+server.put("/UPDATE/:id",UpdateMovie)
+server.get("/getMovie/:id",getOneMovie)
+
+
+function deleteMovie(req,res){
+const deleteMov=req.params.id;
+const sql=`delete from addmovie where id=${deleteMov};`
+client.query(sql).then((data)=>{
+
+
+res.send("Movie deleted")
+
+
+
+})
+
+}
+
+
+function getOneMovie(req,res){
+const getMovie=req.params.id
+const sql=`select * from addmovie where id=${getMovie};`
+client.query(sql).then((data)=>{
+
+
+
+
+
+  res.send(data.rows)
+})
+
+
+
+
+}
+
+function UpdateMovie(req,res){
+
+const update=req.params.id
+const sql=`update addmovie set comments=$1 where id=${update} returning* ;`
+const values=[req.body.comments]
+client.query(sql,values).then((data)=>{
+
+
+res.send("Comment Updated")
+
+
+})
+
+
+
+
+}
 
 function addMovieDb(req, res) {
   const movie = req.body;

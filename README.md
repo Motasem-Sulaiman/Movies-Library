@@ -2,6 +2,8 @@
 # Project Name - Project Version
 # DataBase Added
 **Author Name**: Motasem Sulaiman
+# WRRC4
+![wrrc4](./wrrc4.png)
 # WRRC3
 ![wrrc3](./wrrc3.png)
 # WRRC2
@@ -10,7 +12,7 @@
 ![wrrc](./wrrc.png)
 
 ## Overview
-Creating a server and make a request and response to retrive data from API and Data base
+Creating a server and make a request and response to retrive data from API and Data base and add CRUD fucntions to database
 ## Getting Started
 -get your own API_KEY
 -create new repo <br>
@@ -26,5 +28,5 @@ Creating a server and make a request and response to retrive data from API and D
 -download Thunder Client extension
 
 ## Project Features
--you can retrive the data from server or API by writing one of paths(localhost:3001/favorite <br>, localhost:3001/<br>, localhost:3001/trending <br>, localhost:3001/search?query="text" <br>, localhost:3001/top_rated <br>,localhost:3001/now_playing)<br><br>
+-you can retrive the data from server or API or DATABASE and u can update and delete from DATABASE by writing one of paths(localhost:3001/favorite <br>, localhost:3001/<br>, localhost:3001/trending <br>, localhost:3001/search?query="text" <br>, localhost:3001/top_rated <br>,localhost:3001/now_playing<br>, localhost:3001/getMovie<br>, localhost:3001/addMovie<br>, localhost:3001/getMovies)<br><br>
 -contain error handler (500,404)
